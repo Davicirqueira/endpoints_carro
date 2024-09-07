@@ -6,7 +6,6 @@ const endpoints = Router()
 import multer from "multer";
 
 
-
 endpoints.post('/carro', async (req, resp) => {
 
     try {
