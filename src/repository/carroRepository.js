@@ -1,3 +1,4 @@
+import endpoints from '../controller/carroController.js'
 import con from './connection.js'
 
 export async function inserirCarro(carro){
@@ -87,3 +88,24 @@ export async function removerCarro(id){
     return linhasAfetadas;
 
 } 
+
+
+//Imagem do Carro
+export async function inserirImagemCarro(id, caminho){
+
+    const comando = `
+    UPDATE tb_carro
+        SET img_Carro = ? 
+        WHERE id_carro = ?              
+    `
+
+    let resposta = con.query(comando, [caminho, id]);
+
+    let info = resposta[0];
+
+    let linhasAfetadas = info;
+
+    return linhasAfetadas;
+
+}
+

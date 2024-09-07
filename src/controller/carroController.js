@@ -3,6 +3,10 @@ import * as db from '../repository/carroRepository.js';
 import { Router } from 'express';
 const endpoints = Router()
 
+import multer from "multer";
+
+
+
 endpoints.post('/carro', async (req, resp) => {
 
     try {
@@ -119,6 +123,33 @@ endpoints.delete('/carro/:id', async (req, resp) => {
 
     }
 
+})
+
+
+//Imagem do Carro
+let imgCarro = multer({dest: './storage/carroImg'});
+
+endpoints.put('/carro/:id/imagem', imgCarro.single('imagem'), async (req, resp) => {
+
+    try{
+
+        let id = req.params.id;
+        let urlImg = req.file.path;
+        
+        await db.inserirImagemCarro(id, urlImg)
+
+        resp.status(204).send();
+
+    }
+    catch(err){
+
+        resp.status(400).send({
+
+            erro: err.message
+
+        })
+
+    }
 })
 
 export default endpoints;
